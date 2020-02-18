@@ -284,7 +284,7 @@ function listenForTX(pbAttr) {
         var getTransactions = txData.utxos[i];
 
         if (pbAttr.timeStamp < getTransactions.ts) {
-          if (getTransactions.amount == pbAttr.bchAmount) {
+          if (getTransactions.amount == pbAttr.bchAmount || pbAttr.bchAmount == 0) {
             stopListenForTX();
 
             pbAttr.txid = getTransactions.txid;
@@ -376,8 +376,9 @@ function openModal(pbAttr) {
     pbAttr.URI = pbAttr.toAddress;
   } else {
     pbAttr.URI = pbAttr.toAddress + '?amount=' + pbAttr.bchAmount;
-    startListenForTX(pbAttr);
   }
+  
+  startListenForTX(pbAttr);
 
   var qrParams = {
     ecclevel: 'Q',
